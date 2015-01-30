@@ -4,11 +4,15 @@
       <link href="css/clock.css" rel="stylesheet" type="text/css" />
       <title>My Clock</title>
 	</head>
-	<body onload = "getTime()">
+	<body onload = "getTime(); getTemp();">
       <h1>This is a clock</h1>
       <p id="clock">
       </p>
+      <div id="forecastLabel">
+      </div>
+      <img id="forecastIcon">
       <p>No Alarms Set</p>
       <script src="js/clock.js" type="text/javascript"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	</body>
 </html>
