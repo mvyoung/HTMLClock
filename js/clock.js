@@ -35,3 +35,71 @@ var getTemp = function() {
       console.log(data.daily.data[0].temperatureMax);
    })
 }
+
+var showAlarmPopup = function() {
+   $("#mask").removeClass("hide");
+   $("#popup").removeClass("hide");
+}
+
+var hideAlarmPopup = function() {
+   $("#mask").addClass("hide");
+   $("#popup").addClass("hide");
+}
+
+var insertAlarm = function(object, hours, min, ampm, alarmName) {
+   console.log(hours + ':' + min + ' ' + ampm);
+   var newDiv = $("<div>");
+   newDiv.addClass(".flexable");
+   var subDiv = $("<div>");
+   subDiv.addClass("name");
+   subDiv.text(alarmName);
+   newDiv.append(subDiv);
+   var subsubDiv = $("<div>");
+   subsubDiv.addClass("time");
+   subsubDiv.text(hours + ':' + min + ' ' + ampm);
+   newDiv.append(subsubDiv);
+   $("#alarms").append(newDiv);
+   var deleteButton = $("<button>");
+   deleteButton.text("Delete");
+   deleteButton.click(function () {
+      object.destroy({
+         success: function(object) {
+            newDiv.remove();
+         },
+         error: function(object, error) {
+            console.log("ERROR ON DELETE ALARM");
+         }
+      })
+   });
+   newDiv.append(deleteButton);
+}
+
+var addAlarm = function() {
+   var hours, mins, ampm, alarmName;
+   hours = $("#hours option:selected").text();
+   mins = $("#mins option:selected").text();
+   ampm = $("#ampm option:selected").text();
+   alarmName = $("#alarmName").val();
+   
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var alarmObject = new AlarmObject();
+   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
+   success: function(object) {
+      insertAlarm(object, hours, mins, ampm, alarmName);
+      hideAlarmPopup();
+   }
+   });
+}
+
+var getAllAlarms = function() {
+   Parse.initialize("WkFQV21CSDe7o4tdonGdbLrBuZpmZt322rsw28TN", "A5mmOtol2Cv0IOKM6dSLltMX2uXnUgvkfiwZJPjP");
+   var AlarmObject = Parse.Object.extend("Alarm");
+   var query = new Parse.Query(AlarmObject);
+   query.find({
+      success: function(results) {
+         for (var i = 0; i < results.length; i++) { 
+            insertAlarm(results[i], results[i].get('hours'), results[i].get('mins'), results[i].get('ampm'), results[i].get('alarmName'));
+         }
+      }
+   });
+}
