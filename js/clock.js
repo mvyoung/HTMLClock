@@ -74,13 +74,17 @@ var insertAlarm = function(object, hours, min, ampm, alarmName) {
    newDiv.append(deleteButton);
 }
 
-var addAlarm = function(user) {
+var addAlarm = function() {
    var hours, mins, ampm, alarmName;
    hours = $("#hours option:selected").text();
    mins = $("#mins option:selected").text();
    ampm = $("#ampm option:selected").text();
    alarmName = $("#alarmName").val();
-   console.log("USER: " + user);
+   
+   FB.api('/me', function(response) {
+      console.log(response.name);
+      user = response.name;
+   });
    
    var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
