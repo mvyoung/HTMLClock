@@ -104,6 +104,8 @@
             FB.logout(function(response) {
                $('#title').text("This is a Clock");
                $('#alarmContainer').addClass("hide");
+               $('#login').removeClass("hide");
+               $('#logout').addClass("hide");
             });
          }
 
