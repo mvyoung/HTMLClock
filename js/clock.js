@@ -74,7 +74,7 @@ var insertAlarm = function(object, hours, min, ampm, alarmName) {
    newDiv.append(deleteButton);
 }
 
-var addAlarm = function() {
+var addAlarm = function(user) {
    var hours, mins, ampm, alarmName;
    hours = $("#hours option:selected").text();
    mins = $("#mins option:selected").text();
@@ -83,7 +83,7 @@ var addAlarm = function() {
    
    var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
-   alarmObject.save({"hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
+   alarmObject.save({"username": user, "hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
    success: function(object) {
       insertAlarm(object, hours, mins, ampm, alarmName);
       hideAlarmPopup();
@@ -91,10 +91,11 @@ var addAlarm = function() {
    });
 }
 
-var getAllAlarms = function() {
+var getAllAlarms = function(user) {
    Parse.initialize("WkFQV21CSDe7o4tdonGdbLrBuZpmZt322rsw28TN", "A5mmOtol2Cv0IOKM6dSLltMX2uXnUgvkfiwZJPjP");
    var AlarmObject = Parse.Object.extend("Alarm");
    var query = new Parse.Query(AlarmObject);
+   query.equalTo("username", user);
    query.find({
       success: function(results) {
          for (var i = 0; i < results.length; i++) { 
