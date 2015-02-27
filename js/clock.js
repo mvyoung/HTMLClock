@@ -70,12 +70,24 @@ var insertAlarm = function(object, hours, min, ampm, alarmName) {
             console.log("ERROR ON DELETE ALARM");
          }
       })
+      ga('send', 'event', 'Alarm', 'Delete');
    });
    newDiv.append(deleteButton);
 }
 
 var addAlarm = function() {
    var hours, mins, ampm, alarmName;
+
+   function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+         if (response.status === 'connected') {
+            // continue code execution
+         } else {
+            return;
+         }
+      });
+   }
+
    hours = $("#hours option:selected").text();
    mins = $("#mins option:selected").text();
    ampm = $("#ampm option:selected").text();
@@ -89,11 +101,13 @@ var addAlarm = function() {
    var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
    alarmObject.save({"username": user, "hours": hours, "mins": mins, "ampm": ampm, "alarmName": alarmName}, {
-   success: function(object) {
-      insertAlarm(object, hours, mins, ampm, alarmName);
-      hideAlarmPopup();
-   }
+      success: function(object) {
+         insertAlarm(object, hours, mins, ampm, alarmName);
+         hideAlarmPopup();
+      }
    });
+
+   ga('send', 'event', 'Alarm', 'Add');
 }
 
 var getAllAlarms = function(user) {

@@ -13,7 +13,7 @@
       </div>
       <img id="forecastIcon">
       <!-- <p>No Alarms Set</p> -->
-      <div id="alarmContainer" class="hide">
+      <div id="alarmContainer">
          <div id="alarmHeader" class="flexable">
             <h2>Alarms</h2>
             <input type="button" value="Add Alarm" class="button" onclick="showAlarmPopup()" />
@@ -104,7 +104,7 @@
          function logout() {
             FB.logout(function(response) {
                $('#title').text("This is a Clock");
-               $('#alarmContainer').addClass("hide");
+               // $('#alarmContainer').addClass("hide");
                $('#login').removeClass("hide");
                $('#logout').addClass("hide");
                $('#alarms').empty();
@@ -158,6 +158,16 @@
                   'Thanks for logging in, ' + response.name + '!';
             });
          }
+      </script>
+      <script>
+         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+         ga('create', 'UA-60131925-1', 'auto');
+         ga('send', 'pageview');
+
       </script>
       <fb:login-button id='login' scope="public_profile,email" onlogin="checkLoginState();">
       </fb:login-button>
