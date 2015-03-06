@@ -16,8 +16,7 @@
             $.ajax({
                url: "https://api.imgur.com/3/account/me",
                success: function(result) {
-                  console.log(result);
-                  alert(result.url);
+                  alert(result.data.url);
                },
                beforeSend: function(xhr) {
                   xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('access_token'));
