@@ -16,6 +16,9 @@
                url: "https://api.imgur.com/3/account/me",
                success: function(result) {
                   alert(result.url);
+               },
+               beforeSend: function() {
+                  localStorage.getItem('access_token');
                }
             })
          }
