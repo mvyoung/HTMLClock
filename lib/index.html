@@ -11,7 +11,7 @@
       var info = {
          client_id:'6a580e02be5b1d7',
          type:'token',
-         callback_function = function() {
+         callback_function:function() {
             $.ajax({
                url: "https://api.imgur.com/3/account/me",
                success: function(result) {
@@ -19,6 +19,7 @@
                }
             })
          }
-      };</script>
+      };
+      </script>
    </body>
 </html>
