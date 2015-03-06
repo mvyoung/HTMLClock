@@ -16,6 +16,7 @@
             $.ajax({
                url: "https://api.imgur.com/3/account/me",
                success: function(result) {
+                  console.log(result);
                   alert(result.url);
                },
                beforeSend: function(xhr) {
